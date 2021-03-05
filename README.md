@@ -1,5 +1,8 @@
 # Translator
 
+Translator is an easy to use web application that allows you to easily communicate with another user in by translating text in an easy to use interface.
+It currently uses the Google Translation API in order to retrieve the languages and perform the translation.
+
 ## Available Scripts
 
 In the project directory, you can run:
