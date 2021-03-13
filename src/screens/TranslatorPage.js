@@ -9,7 +9,8 @@ import {
   Button,
   Icon,
 } from "semantic-ui-react";
-const config = require("../Config/config");
+const config = process.env.REACT_APP_TRANSLATE_API;
+console.log(config);
 var iso6392 = require("iso-639-2");
 
 export default class TranslatorPage extends Component {
@@ -39,7 +40,7 @@ export default class TranslatorPage extends Component {
 
   async componentDidMount() {
     var languageRequest = new FormData();
-    languageRequest.append("key", config.googleTranslationAPI.key);
+    languageRequest.append("key", config);
     const response = await fetch(
       "https://translation.googleapis.com/language/translate/v2/languages",
       {
@@ -99,7 +100,7 @@ export default class TranslatorPage extends Component {
       translationRequest.append("q", input1);
       translationRequest.append("target", languageMap[language2]);
     }
-    translationRequest.append("key", config.googleTranslationAPI.key);
+    translationRequest.append("key", config);
 
     const response = await fetch(
       "https://translation.googleapis.com/language/translate/v2",
