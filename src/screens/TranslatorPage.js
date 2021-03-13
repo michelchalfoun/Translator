@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
 } from "semantic-ui-react";
+const config = require("../Config/config");
 var iso6392 = require("iso-639-2");
 
 export default class TranslatorPage extends Component {
@@ -22,12 +23,23 @@ export default class TranslatorPage extends Component {
       language2: "",
       input1: "",
       input2: "",
+      thumbsUp: false,
+      thumbsDown: false,
     };
+  }
+
+  async handleThumbsUp() {
+    this.setState({ thumbsDown: false, thumbsUp: true });
+    return;
+  }
+  async handleThumbsDown() {
+    this.setState({ thumbsDown: true, thumbsUp: false });
+    return;
   }
 
   async componentDidMount() {
     var languageRequest = new FormData();
-    languageRequest.append("key", "AIzaSyCQY5StYhPQJJpcBUrtpnDa_nQmPipNf3c");
+    languageRequest.append("key", config.googleTranslationAPI.key);
     const response = await fetch(
       "https://translation.googleapis.com/language/translate/v2/languages",
       {
@@ -59,11 +71,25 @@ export default class TranslatorPage extends Component {
       language2: "",
       input1: "",
       input2: "",
+      thumbsUp: false,
+      thumbsDown: false,
     });
   }
 
   async myTranslate(i) {
     const { input1, input2, language1, language2, languageMap } = this.state;
+
+    if (i === 1) {
+      if (!language1 || !input2) {
+        return;
+      }
+    } else if (i === 2) {
+      if (!language2 || !input1) {
+        return;
+      }
+    } else {
+      return;
+    }
 
     var translationRequest = new FormData();
     if (i === 1) {
@@ -73,7 +99,7 @@ export default class TranslatorPage extends Component {
       translationRequest.append("q", input1);
       translationRequest.append("target", languageMap[language2]);
     }
-    translationRequest.append("key", "AIzaSyCQY5StYhPQJJpcBUrtpnDa_nQmPipNf3c");
+    translationRequest.append("key", config.googleTranslationAPI.key);
 
     const response = await fetch(
       "https://translation.googleapis.com/language/translate/v2",
@@ -91,7 +117,7 @@ export default class TranslatorPage extends Component {
   }
 
   render() {
-    const { input1, input2, languageNames } = this.state;
+    const { input1, input2, languageNames, thumbsDown, thumbsUp } = this.state;
 
     const languages = _.map(languageNames, (languageName, index) => ({
       key: index,
@@ -101,7 +127,6 @@ export default class TranslatorPage extends Component {
     return (
       <div
         style={{
-          // position: "absolute",
           left: "0%",
           top: "0%",
           height: "100vh",
@@ -111,13 +136,29 @@ export default class TranslatorPage extends Component {
       >
         <div
           style={{
-            // backgroundColor: "red",
             position: "absolute",
             left: "50%",
-            top: "40%",
+            top: "45%",
             transform: "translate(-50%, -50%)",
           }}
         >
+          <Header
+            style={{
+              transform: "translate(40%, 0%)",
+              marginBottom: "8%",
+            }}
+            as="h2"
+            icon
+          >
+            Translator.
+            <Header.Subheader>
+              Choose your languages and start typing!
+            </Header.Subheader>
+            <Header.Subheader>
+              When reading a translation, make sure to rate it with the
+              corresponding thumbs up/down buttons.
+            </Header.Subheader>
+          </Header>
           <Grid style={{ width: 1250 }} columns={2}>
             <Grid.Row>
               <Grid.Column>
@@ -160,13 +201,17 @@ export default class TranslatorPage extends Component {
                     style={{
                       marginTop: "2%",
                     }}
-                    animated
                   >
                     <Button.Content visible>Tell Person 2</Button.Content>
-                    <Button.Content hidden>
-                      <Icon name="arrow right" />
-                    </Button.Content>
                   </Button>
+                  <Icon
+                    onClick={() => this.handleThumbsUp()}
+                    name="thumbs up"
+                  />
+                  <Icon
+                    onClick={() => this.handleThumbsDown()}
+                    name="thumbs down"
+                  />
                 </Form>
               </Grid.Column>
               <Grid.Column>
@@ -209,17 +254,34 @@ export default class TranslatorPage extends Component {
                     style={{
                       marginTop: "2%",
                     }}
-                    animated
                   >
                     <Button.Content visible>Tell Person 1</Button.Content>
-                    <Button.Content hidden>
-                      <Icon name="arrow left" />
-                    </Button.Content>
                   </Button>
+                  <Form style={{ position: "absolute", right: 0 }}>
+                    <Icon
+                      onClick={() => this.handleThumbsUp()}
+                      name="thumbs up"
+                    />
+                    <Icon
+                      onClick={() => this.handleThumbsDown()}
+                      name="thumbs down"
+                    />
+                  </Form>
                 </Form>
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          <Form
+            style={{
+              transform: "translate(45%, 0%)",
+              marginTop: "2%",
+            }}
+          >
+            {thumbsUp && <Icon color="green" size="massive" name="thumbs up" />}
+            {thumbsDown && (
+              <Icon color="red" size="massive" name="thumbs down" />
+            )}
+          </Form>
         </div>
       </div>
     );
