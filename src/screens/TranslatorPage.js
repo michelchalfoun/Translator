@@ -8,6 +8,7 @@ import {
   Dropdown,
   Button,
   Icon,
+  Label,
 } from "semantic-ui-react";
 const config = process.env.REACT_APP_TRANSLATE_API;
 console.log(config);
@@ -283,6 +284,9 @@ export default class TranslatorPage extends Component {
               <Icon color="red" size="massive" name="thumbs down" />
             )}
           </Form>
+          <Label size="large">
+            All done? Take this short <a href={"/"}>survey</a>.
+          </Label>
         </div>
       </div>
     );
