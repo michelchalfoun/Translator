@@ -103,5 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-#Mac
+# Mac
 .DS_Store
+
+# Configuration
+src/Config/config.js
