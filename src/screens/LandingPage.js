@@ -14,28 +14,17 @@ function LandingPage() {
   return (
     <div
       style={{
-        // position: "absolute",
-        left: "0%",
-        top: "0%",
         height: "100vh",
         width: "100vw",
         backgroundColor: `rgb(138,196,208)`,
       }}
     >
-      {/* <Header as="h2" icon textAlign="center">
-        <Icon name="users" circular />
-        <Header.Content>Friends</Header.Content>
-      </Header> */}
-      {/* <Card style={{ marginTop: "3%" }} centered={true}> */}
       <div
         style={{
           position: "absolute",
           width: "30vw",
-          // height: "80vh",
           left: "50%",
           top: "40%",
-          // marginTop: "5%",
-          // marginBottom: "5%",
           transform: "translate(-50%, -50%)",
         }}
       >
@@ -56,20 +45,16 @@ function LandingPage() {
             <Image circular size="small" src={Globe} />
           </Reveal.Content>
         </Reveal>
-        {/* <Card.Content> */}
         <Header textAlign="center" as="h1">
           Welcome to Translator!
         </Header>
         <Button
           href="/Translate"
-          //   onClick={TranslatorPage}
           color="blue"
           size="large"
-          // fluid={true}
           style={{
             marginTop: 20,
             left: "50%",
-            // top: "50%",
             transform: "translate(-50%, 0)",
           }}
           animated
@@ -91,8 +76,6 @@ function LandingPage() {
           <Statistic.Value>104</Statistic.Value>
           <Statistic.Label>Languages</Statistic.Label>
         </Statistic>
-        {/* </Card.Content> */}
-        {/* </Card> */}
       </div>
     </div>
   );
