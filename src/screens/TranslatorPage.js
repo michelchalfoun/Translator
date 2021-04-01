@@ -1,5 +1,5 @@
-import _ from "lodash";
-import React, { Component } from "react";
+import _ from 'lodash';
+import React, { Component } from 'react';
 import {
   TextArea,
   Grid,
@@ -9,22 +9,22 @@ import {
   Button,
   Icon,
   Label,
-} from "semantic-ui-react";
+} from 'semantic-ui-react';
 const config = process.env.REACT_APP_TRANSLATE_API;
 console.log(config);
-var iso6392 = require("iso-639-2");
+var iso6392 = require('iso-639-2');
 
 export default class TranslatorPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       languageNames: [],
-      languageMap: "",
+      languageMap: '',
       isLoading: false,
-      language1: "",
-      language2: "",
-      input1: "",
-      input2: "",
+      language1: '',
+      language2: '',
+      input1: '',
+      input2: '',
       thumbsUp: false,
       thumbsDown: false,
     };
@@ -39,13 +39,18 @@ export default class TranslatorPage extends Component {
     return;
   }
 
+  openInNewTab = (url) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+  };
+
   async componentDidMount() {
     var languageRequest = new FormData();
-    languageRequest.append("key", config);
+    languageRequest.append('key', config);
     const response = await fetch(
-      "https://translation.googleapis.com/language/translate/v2/languages",
+      'https://translation.googleapis.com/language/translate/v2/languages',
       {
-        method: "POST",
+        method: 'POST',
         body: languageRequest,
       }
     ).then((response) => response.json());
@@ -69,10 +74,10 @@ export default class TranslatorPage extends Component {
       languageNames: languageNamesTemp,
       languageMap: languageMapTemp,
       isLoading: false,
-      language1: "",
-      language2: "",
-      input1: "",
-      input2: "",
+      language1: '',
+      language2: '',
+      input1: '',
+      input2: '',
       thumbsUp: false,
       thumbsDown: false,
     });
@@ -95,18 +100,18 @@ export default class TranslatorPage extends Component {
 
     var translationRequest = new FormData();
     if (i === 1) {
-      translationRequest.append("q", input2);
-      translationRequest.append("target", languageMap[language1]);
+      translationRequest.append('q', input2);
+      translationRequest.append('target', languageMap[language1]);
     } else if (i === 2) {
-      translationRequest.append("q", input1);
-      translationRequest.append("target", languageMap[language2]);
+      translationRequest.append('q', input1);
+      translationRequest.append('target', languageMap[language2]);
     }
-    translationRequest.append("key", config);
+    translationRequest.append('key', config);
 
     const response = await fetch(
-      "https://translation.googleapis.com/language/translate/v2",
+      'https://translation.googleapis.com/language/translate/v2',
       {
-        method: "POST",
+        method: 'POST',
         body: translationRequest,
       }
     ).then((response) => response.json());
@@ -129,25 +134,25 @@ export default class TranslatorPage extends Component {
     return (
       <div
         style={{
-          left: "0%",
-          top: "0%",
-          height: "100vh",
-          width: "100vw",
+          left: '0%',
+          top: '0%',
+          height: '100vh',
+          width: '100vw',
           backgroundColor: `rgb(138,196,208)`,
         }}
       >
         <div
           style={{
-            position: "absolute",
-            left: "50%",
-            top: "45%",
-            transform: "translate(-50%, -50%)",
+            position: 'absolute',
+            left: '50%',
+            top: '45%',
+            transform: 'translate(-50%, -50%)',
           }}
         >
           <Header
             style={{
-              transform: "translate(40%, 0%)",
-              marginBottom: "8%",
+              transform: 'translate(40%, 0%)',
+              marginBottom: '8%',
             }}
             as="h2"
             icon
@@ -169,11 +174,11 @@ export default class TranslatorPage extends Component {
                 </Header>
                 <Dropdown
                   style={{
-                    marginTop: "5%",
-                    marginBottom: "5%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    marginTop: '5%',
+                    marginBottom: '5%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                   placeholder="Language"
                   search
@@ -186,9 +191,9 @@ export default class TranslatorPage extends Component {
                 <Form>
                   <TextArea
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}
                     value={input1}
                     onChange={(event, data) =>
@@ -201,7 +206,7 @@ export default class TranslatorPage extends Component {
                     size="large"
                     floated="right"
                     style={{
-                      marginTop: "2%",
+                      marginTop: '2%',
                     }}
                   >
                     <Button.Content visible>Tell Person 2</Button.Content>
@@ -222,11 +227,11 @@ export default class TranslatorPage extends Component {
                 </Header>
                 <Dropdown
                   style={{
-                    marginTop: "5%",
-                    marginBottom: "5%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    marginTop: '5%',
+                    marginBottom: '5%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                   placeholder="Language"
                   search
@@ -239,9 +244,9 @@ export default class TranslatorPage extends Component {
                 <Form>
                   <TextArea
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}
                     value={input2}
                     onChange={(event, data) =>
@@ -254,12 +259,12 @@ export default class TranslatorPage extends Component {
                     size="large"
                     floated="left"
                     style={{
-                      marginTop: "2%",
+                      marginTop: '2%',
                     }}
                   >
                     <Button.Content visible>Tell Person 1</Button.Content>
                   </Button>
-                  <Form style={{ position: "absolute", right: 0 }}>
+                  <Form style={{ position: 'absolute', right: 0 }}>
                     <Icon
                       onClick={() => this.handleThumbsUp()}
                       name="thumbs up"
@@ -275,8 +280,8 @@ export default class TranslatorPage extends Component {
           </Grid>
           <Form
             style={{
-              transform: "translate(45%, 0%)",
-              marginTop: "2%",
+              transform: 'translate(45%, 0%)',
+              marginTop: '2%',
             }}
           >
             {thumbsUp && <Icon color="green" size="massive" name="thumbs up" />}
@@ -284,9 +289,14 @@ export default class TranslatorPage extends Component {
               <Icon color="red" size="massive" name="thumbs down" />
             )}
           </Form>
-          <Label size="large">
-            All done? Take this short <a href={"/"}>survey</a>.
-          </Label>
+          <Button
+            onClick={() =>
+              this.openInNewTab('https://forms.gle/uhxpTKkUP2x1bfT2A')
+            }
+            size="large"
+          >
+            All done? Take this short survey.
+          </Button>
         </div>
       </div>
     );
