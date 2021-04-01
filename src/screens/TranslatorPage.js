@@ -8,7 +8,6 @@ import {
   Dropdown,
   Button,
   Icon,
-  Label,
 } from 'semantic-ui-react';
 const config = process.env.REACT_APP_TRANSLATE_API;
 console.log(config);
